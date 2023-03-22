@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Product FTM</title>
+        <link rel="stylesheet" href='https://cdn.jsdelivr.net/gh/brutusin/json-forms@1.6.3/dist/css/brutusin-json-forms.min.css'/>
+        <script src="https://cdn.jsdelivr.net/gh/brutusin/json-forms@1.6.3/dist/js/brutusin-json-forms.min.js"></script>
+    </head>
+    <body>
+        <script>
+            const schema = JSON_SCHEMA
+
+            const BrutusinForms = brutusin["json-forms"];
+            const bf = BrutusinForms.create(schema);
+            const container = document.getElementById('form');
+            bf.render(container, "");
+        </script>
+    </body>
+</html>
+
