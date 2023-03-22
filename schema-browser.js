@@ -7,6 +7,7 @@ const finalhandler = require('finalhandler')
 
 const PORT = process.env.PORT || 3030
 const servePath = process.env.SCHEMA_PATH || process.argv[2]
+const EXTENSION = process.env.EXTENSION || '.schema.json'
 
 if (!servePath) {
   console.error('No schema path provided')
@@ -44,7 +45,7 @@ const serve = serveStatic(servePath)
 
 const server = http.createServer((req, res) => {
 
-  if (req.url.endsWith('.schema.json')) {
+  if (req.url.endsWith(EXTENSION)) {
     dereferenceSchema(req, res)
     return
   }
