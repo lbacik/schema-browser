@@ -13,7 +13,7 @@
       "type": "string"
     },
     "point": {
-      "$ref": "https://develop.dev.jsonhub.cloud/schemas/018b3939-efd9-762c-bd4d-7b4ab0262d69"
+      "$ref": "https://jsonhub.cloud/schemas/018bafc7-b5ea-7e7b-a3fb-35dd7e14badd"
     }
   }
 }
