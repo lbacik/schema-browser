@@ -8,6 +8,7 @@ const finalhandler = require('finalhandler')
 const PORT = process.env.PORT || 3030
 const servePath = process.env.SCHEMA_PATH || process.argv[2]
 const EXTENSION = process.env.EXTENSION || '.schema.json'
+const DEREFERENCE = process.env.DEREFERENCE || true
 
 if (!servePath) {
   console.error('No schema path provided')
@@ -22,22 +23,31 @@ try {
   console.error(err);
 }
 
-const dereferenceSchema = (req, response) => {
+const readSchema = (req, response) => {
 
   const schemafile = servePath + req.url
-  console.log('dereferenceSchema', schemafile)
+  console.log('schema', schemafile)
 
-  $RefParser.dereference(schemafile, (err, schema) => {
-    let html
-    if (err) {
-      html = err.message
-    } else {
-      html = htmlTemplateFile.replace(/JSON_SCHEMA/g, JSON.stringify(schema))
-    }
+  if (DEREFERENCE === true) {
+    $RefParser.dereference(schemafile, (err, schema) => {
+      let html
+      if (err) {
+        html = err.message
+      } else {
+        html = htmlTemplateFile.replace(/JSON_SCHEMA/g, JSON.stringify(schema))
+      }
+      response.writeHead(200, { 'Content-Type': 'text/html' });
+      response.end(html);
+    })
+  } else {
+    const schema = fs.readFileSync(schemafile, 'utf8')
 
+    console.log(schema)
+
+    const html = htmlTemplateFile.replace(/JSON_SCHEMA/g, JSON.stringify(JSON.parse(schema)))
     response.writeHead(200, { 'Content-Type': 'text/html' });
     response.end(html);
-  })
+  }
 }
 
 const index = serveIndex(servePath, {'icons': true})
@@ -46,7 +56,7 @@ const serve = serveStatic(servePath)
 const server = http.createServer((req, res) => {
 
   if (req.url.endsWith(EXTENSION)) {
-    dereferenceSchema(req, res)
+    readSchema(req, res)
     return
   }
 
@@ -60,4 +70,3 @@ const server = http.createServer((req, res) => {
 }).listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
 })
-

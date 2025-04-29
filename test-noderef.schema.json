@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "$defs": {
+    "age": {
+      "type": "number"
+    }
+  },
+  "properties": {
+    "age": {
+      "$ref": "#/$defs/age"
+    },
+    "name": {
+      "type": "string"
+    },
+    "nested": {
+      "type": "array",
+      "items": {
+        "$ref": "#"
+      }
+    }
+  }
+}
