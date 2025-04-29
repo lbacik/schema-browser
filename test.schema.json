@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "$defs": {
+    "age": {
+      "type": "number"
+    }
+  },
+  "properties": {
+    "age": {
+      "$ref": "#/$defs/age"
+    },
+    "name": {
+      "type": "string"
+    },
+    "point": {
+      "$ref": "https://develop.dev.jsonhub.cloud/schemas/018b3939-efd9-762c-bd4d-7b4ab0262d69"
+    }
+  }
+}
